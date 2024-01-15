@@ -20,6 +20,6 @@ public class VehicleEnCursa {
 
     @Override
     public String toString() {
-        return "[Jugador] " + _jugador + "[Vehicle] " + _vehicle + "[Personatge] " + _personatge;
+        return " [Vehicle] -> " + _vehicle + " [Personatge] -> " + _personatge + "\n";
     }
 }

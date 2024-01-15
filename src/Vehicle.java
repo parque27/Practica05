@@ -3,6 +3,12 @@ public class Vehicle {
     private int _velocitatMaxima;
     private int _adherencia;
 
+    public Vehicle(){
+        _nom = "Default";
+        _velocitatMaxima = 0;
+        _adherencia = 0;
+    }
+
     public void avança(){
 
     }
