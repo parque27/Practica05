@@ -1,4 +1,4 @@
-Copa Champiñon, 3
-Copa Flor, 3
-Copa Estrella, 4
-Copa Plátano, 3
+Copa Champiñon,3,50
+Copa Flor,3,50
+Copa Estrella,4,50
+Copa Plátano,3,50

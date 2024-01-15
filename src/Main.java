@@ -31,6 +31,7 @@ public class Main {
                 // Iniciar cursa
                 case 1:
                     List<String> cursasListasParaIniciar = new ArrayList<>();
+
                     curses.forEach((nom, control) -> {
                         if (control.getEstado() == ControlCursa.EstatCursa.LISTA_PARA_INICIAR) {
                             cursasListasParaIniciar.add(nom);
@@ -52,6 +53,9 @@ public class Main {
                         System.out.println("Selección no válida. Elige nuevamente.");
                         break;
                     }
+
+                    menuCursa(curses.get(cursasListasParaIniciar.get(eleccionCursa)));
+
                     break;
                 // Mostrar curses amb vehicles
                 case 2:
@@ -63,6 +67,47 @@ public class Main {
             }
         }
         while (opcio != 0);
+    }
+
+    private static void menuCursa(ControlCursa control){
+
+        Scanner scanner = new Scanner(System.in);
+        int opcio = 1;
+
+        List<Jugador> jugadores = control.llistaJugadors();
+
+        do {
+            for (Jugador jugador : jugadores) {
+                if(!control.isCursaAcabada()){
+                    System.out.println("Turno de " + jugador + ":");
+                    System.out.println("[1] Avanzar");
+                    System.out.println("[2] Frenar");
+                    System.out.print("Selecciona una opción: ");
+                    opcio = scanner.nextInt();
+
+                    switch (opcio) {
+                        case 1:
+                            // Avanzar
+                            control.avança(jugador);
+                            System.out.println("Avanzando...");
+                            break;
+                        case 2:
+                            // Frenar
+                            control.frenar(jugador);
+                            System.out.println("Frenando...");
+                            break;
+                        default:
+                            System.out.println("Opción no válida. Elige nuevamente.");
+                            break;
+                    }
+
+                    control.classificacio();
+                }
+
+            }
+
+        } while (!control.isCursaAcabada());
+
     }
 
     private static void prepararParticipacio(Map<String, ControlCursa> curses, Map<String, Jugador> jugadors, Map<String, Personatge> personatges, Scanner scanner, Map<Jugador,VehicleEnCursa> vehiclesEnCursa){
@@ -215,15 +260,16 @@ public class Main {
             String linea;
             String nom;
             int nVoltes;
+            int distancia;
             while ((linea = br.readLine()) != null) {
                 // Dividir la línea en nombre de la carrera y número de vueltas
                 String[] partes = linea.split(",");
-                if (partes.length == 2) {
+                if (partes.length == 3) {
                     nom = partes[0].trim();
                     nVoltes = Integer.parseInt(partes[1].trim());
-
+                    distancia = Integer.parseInt(partes[2].trim());
                     // Crear instancia de Cursa y agregarla al ControlCursa
-                    Cursa cursa = new Cursa(nVoltes, nom);
+                    Cursa cursa = new Cursa(nVoltes, nom, distancia);
                     ControlCursa controlCursa = new ControlCursa(cursa);
                     curses.put(nom,controlCursa);
                 } else {
